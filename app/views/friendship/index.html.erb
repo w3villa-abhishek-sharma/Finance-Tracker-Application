@@ -1,0 +1,66 @@
+<div class="mt-5">
+<h3>Search Friends</h3>
+    <%= form_tag search_friend_path,remote: :ture, method: :get do %>
+   <div class= "form-group row">
+    <div class="col-sm-11 no-right-padding">
+        <%= text_field_tag :friend, params[:friend], placeholder: "Searh for friends", autofocus: true, class: "form-control form-control-large"%>
+    </div>
+    <div class="col-sm-1 no-left-padding">
+        <%= button_tag type: :submit, class: "btn btn-success" do %>
+       <%= fa_icon 'search 1.8x'%>
+        <% end %>
+    </div>
+   </div>
+    <% end %>
+</div>
+
+<% if @the_friends %>
+ <% @the_friends.each do |friendss| %>
+  
+     <div class="div-for-friend-result">
+    
+        <h5 class=""><%= friendss.first_name %> <%= friendss.last_name %></h5>
+        <p class=""><strong>Email:</strong><%= friendss.email%></p>
+        <p class=""><%= link_to "View Profile" , user_path(id: friendss.id)%></p>
+    
+        <% if !current_user.friends.where(id:friendss.id).exists? %>
+        <%= button_to 'ADD TO YOUR FRIEND',friendship_index_path(user: current_user, friend: friendss.first_name) , class: "btn btn-success", method: :post %>
+        <% else %>
+        <span class="badge badge-secondary">Already friends</span>
+        <% end %>
+    
+</div>
+
+
+
+   
+ <% end %>
+<% end %>
+
+
+
+
+<div class="row mt-4" >
+    <div class= "col-12">
+        <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @friends.each do |friend| %>
+                <tr>
+                <th scope="row"><%= friend.first_name %> <%= friend.last_name %></th>
+                <td><%= friend.email  %></td>
+                <td style="display:flex">
+                    <button class="mr-3 primary-btn btn"><%= link_to "View Profile" , user_path(id: friend.id)%></button>
+    
+                    <%= button_to 'Unfriend',friendship_path(friend.id),method: :delete, data: { turbo_confirm: 'Are you sure?' },class: "btn btn-danger" %></td>
+                </tr>
+            <% end %>
+        </tbody>
+        </table>
+    </div>

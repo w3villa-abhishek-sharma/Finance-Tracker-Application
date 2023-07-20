@@ -1,0 +1,40 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+  <%= link_to "Finance Tracker" ,root_path , class:"navbar-brand" %>
+  <% if current_user %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item <%= 'active' if request.path == my_portfolio_path %>">
+          <%= link_to "Portfolio", my_portfolio_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item <%= 'active' if request.path == friends_path %>">
+          <%= link_to "My Friends", friends_path, class: "nav-link" %>
+        </li>
+               
+        
+      </ul>
+      <ul class= "navbar-nav ml-auto">
+      <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+            <%= fa_icon 'user' %> <%= current_user.full_name %>
+          </a>
+          <div class="dropdown-menu">
+            <%= link_to  edit_user_registration_path, class: "dropdown-item" do %>
+                <%= fa_icon 'edit'%> Edit Account
+            <% end %>
+            
+          </div>
+        </li>
+        <li>
+          <%= button_to  "Logout" , destroy_user_session_path, method: :delete, class: " btn btn-danger mr-3" %>    
+        </li>
+      </ul>
+ <% end %> 
+    </div>
+    </div>
+  </nav>

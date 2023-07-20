@@ -1,0 +1,10 @@
+<% if @friend %>
+<div class="card mb-3" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"><%= @friend.first_name %></h5>
+    <p class="card-text"><strong>NAME:</strong><%= @friend.email%></p>
+    <p class="card-text"><strong>PRICE:</strong><%= @stock.last_price%></p>
+    <%= button_to 'ADD TO YOUR PORTFOLIO',user_stocks_path(user: current_user, ticker: @stock.ticker) , class: "btn btn-success", method: :post %>
+  </div>
+</div>
+<% end %>
